@@ -61,7 +61,7 @@ jobs:
 
       - name: Check by black
         run: |
-          black --check python tests
+          black --check src tests
 
       - name: Check by isort
         run: |
@@ -69,4 +69,4 @@ jobs:
 
       - name: Check by flake8
         run: |
-          flake8 python tests
+          flake8 src tests
