@@ -3,6 +3,13 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Instance:
+    """Instance infomation used for Spark cluster nodes
+
+    Args:
+        num_cores (int, optional): Number of CPU cores. Defaults to 5.
+        memory_size (float, optional): Memory size GB. Defaults to 1.0.
+    """
+
     num_cores: int = 1
     memory_size: float = 1.0
 
