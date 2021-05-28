@@ -184,7 +184,7 @@ class ClientModeOptimizer:
 
     @property
     def driver_memory_overhead(self) -> int:
-        driver_memory_overhead = math.floor(self.total_driver_memory * 0.1)
+        driver_memory_overhead = math.ceil(self.total_driver_memory * 0.1)
         return min(driver_memory_overhead, self.executor_memory_overhead)
 
     @property
