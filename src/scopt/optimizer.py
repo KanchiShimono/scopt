@@ -299,6 +299,29 @@ class SparkConfOptimizer:
             f'({", ".join(map(str, args))})'
         )
 
+    def _repr_html_(self) -> str:
+        header_style = 'style="text-align:center"'
+        body_style = 'style="text-align:left"'
+        data = '\n'.join(
+            [
+                f'<tr><td {body_style}>{k}</td><td {body_style}>{v}</td></tr>'
+                for k, v in self.as_dict().items()
+            ]
+        )
+        return f'''
+            <table>
+                <thead>
+                    <tr>
+                        <td {header_style}>Property</td>
+                        <td {header_style}>Value</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data}
+                </tbody>
+            </table>
+        '''
+
     def as_dict(self) -> Dict[str, Union[int, str]]:
         return {
             'spark.driver.cores': self.optimizer.driver_cores,
