@@ -247,9 +247,9 @@ class SparkConfOptimizer:
     spark.executor.cores: 5
     spark.executor.memory: 36
     spark.executor.memoryOvearhead: 5
-    spark.executor.instances: 30
-    spark.default.parallelism: 300
-    spark.sql.shuffle.partitions: 300
+    spark.executor.instances: 60
+    spark.default.parallelism: 600
+    spark.sql.shuffle.partitions: 600
 
     >>> conf = SparkConf().setAll(sco.as_list())
     >>> print(conf.getAll())
@@ -260,9 +260,9 @@ class SparkConfOptimizer:
         ('spark.executor.cores', '5'),
         ('spark.executor.memory', '36'),
         ('spark.executor.memoryOvearhead', '5'),
-        ('spark.executor.instances', '30'),
-        ('spark.default.parallelism', '300'),
-        ('spark.sql.shuffle.partitions', '300')
+        ('spark.executor.instances', '60'),
+        ('spark.default.parallelism', '600'),
+        ('spark.sql.shuffle.partitions', '600')
     ])
     ```
     """
