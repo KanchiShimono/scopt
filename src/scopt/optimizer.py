@@ -235,17 +235,18 @@ class SparkConfOptimizer:
     ```python
     from pyspark import SparkConf
     from scopt import SparkConfOptimizer
+    from scopt.instances import Instance
 
 
-    >>> sco = SparkConfOptimizer(r5_4xlarge, 10, 'client')
+    >>> sco = SparkConfOptimizer(Instance(32, 250), 10, 'client')
     >>> print(sco)
 
     spark.driver.cores: 5
-    spark.driver.memory: 35
-    spark.driver.memoryOvearhead: 4
+    spark.driver.memory: 36
+    spark.driver.memoryOvearhead: 5
     spark.executor.cores: 5
-    spark.executor.memory: 35
-    spark.executor.memoryOvearhead: 4
+    spark.executor.memory: 36
+    spark.executor.memoryOvearhead: 5
     spark.executor.instances: 30
     spark.default.parallelism: 300
     spark.sql.shuffle.partitions: 300
@@ -254,11 +255,11 @@ class SparkConfOptimizer:
     >>> print(conf.getAll())
     dict_items([
         ('spark.driver.cores', '5'),
-        ('spark.driver.memory', '35'),
-        ('spark.driver.memoryOvearhead', '4'),
+        ('spark.driver.memory', '36'),
+        ('spark.driver.memoryOvearhead', '5'),
         ('spark.executor.cores', '5'),
-        ('spark.executor.memory', '35'),
-        ('spark.executor.memoryOvearhead', '4'),
+        ('spark.executor.memory', '36'),
+        ('spark.executor.memoryOvearhead', '5'),
         ('spark.executor.instances', '30'),
         ('spark.default.parallelism', '300'),
         ('spark.sql.shuffle.partitions', '300')
