@@ -29,11 +29,11 @@ sco = SparkConfOptimizer(executor_instance, num_nodes, deploy_mode)
 print(sco)
 
 # spark.driver.cores: 5
-# spark.driver.memory: 36
-# spark.driver.memoryOvearhead: 5
+# spark.driver.memory: 36g
+# spark.driver.memoryOvearhead: 5g
 # spark.executor.cores: 5
-# spark.executor.memory: 36
-# spark.executor.memoryOvearhead: 5
+# spark.executor.memory: 36g
+# spark.executor.memoryOvearhead: 5g
 # spark.executor.instances: 60
 # spark.default.parallelism: 600
 # spark.sql.shuffle.partitions: 600
@@ -48,11 +48,11 @@ sco = SparkConfOptimizer(executor_instance, num_nodes, deploy_mode)
 print(sco)
 
 # spark.driver.cores: 5
-# spark.driver.memory: 36
-# spark.driver.memoryOvearhead: 5
+# spark.driver.memory: 36g
+# spark.driver.memoryOvearhead: 5g
 # spark.executor.cores: 5
-# spark.executor.memory: 36
-# spark.executor.memoryOvearhead: 5
+# spark.executor.memory: 36g
+# spark.executor.memoryOvearhead: 5g
 # spark.executor.instances: 59
 # spark.default.parallelism: 590
 # spark.sql.shuffle.partitions: 590
@@ -75,11 +75,11 @@ sco = SparkConfOptimizer(
 print(sco)
 
 # spark.driver.cores: 3
-# spark.driver.memory: 26
-# spark.driver.memoryOvearhead: 3
+# spark.driver.memory: 26g
+# spark.driver.memoryOvearhead: 3g
 # spark.executor.cores: 5
-# spark.executor.memory: 36
-# spark.executor.memoryOvearhead: 5
+# spark.executor.memory: 36g
+# spark.executor.memoryOvearhead: 5g
 # spark.executor.instances: 60
 # spark.default.parallelism: 600
 # spark.sql.shuffle.partitions: 600
@@ -108,11 +108,11 @@ print(conf.getAll())
 conf.setAll(sco.as_list())
 # dict_items([
 #     ('spark.driver.cores', '5'),
-#     ('spark.driver.memory', '36'),
-#     ('spark.driver.memoryOvearhead', '5'),
+#     ('spark.driver.memory', '36g'),
+#     ('spark.driver.memoryOvearhead', '5g'),
 #     ('spark.executor.cores', '5'),
-#     ('spark.executor.memory', '36'),
-#     ('spark.executor.memoryOvearhead', '5'),
+#     ('spark.executor.memory', '36g'),
+#     ('spark.executor.memoryOvearhead', '5g'),
 #     ('spark.executor.instances', '60'),
 #     ('spark.default.parallelism', '600'),
 #     ('spark.sql.shuffle.partitions', '600')

@@ -242,11 +242,11 @@ class SparkConfOptimizer:
     >>> print(sco)
 
     spark.driver.cores: 5
-    spark.driver.memory: 36
-    spark.driver.memoryOvearhead: 5
+    spark.driver.memory: 36g
+    spark.driver.memoryOvearhead: 5g
     spark.executor.cores: 5
-    spark.executor.memory: 36
-    spark.executor.memoryOvearhead: 5
+    spark.executor.memory: 36g
+    spark.executor.memoryOvearhead: 5g
     spark.executor.instances: 60
     spark.default.parallelism: 600
     spark.sql.shuffle.partitions: 600
@@ -255,11 +255,11 @@ class SparkConfOptimizer:
     >>> print(conf.getAll())
     dict_items([
         ('spark.driver.cores', '5'),
-        ('spark.driver.memory', '36'),
-        ('spark.driver.memoryOvearhead', '5'),
+        ('spark.driver.memory', '36g'),
+        ('spark.driver.memoryOvearhead', '5g'),
         ('spark.executor.cores', '5'),
-        ('spark.executor.memory', '36'),
-        ('spark.executor.memoryOvearhead', '5'),
+        ('spark.executor.memory', '36g'),
+        ('spark.executor.memoryOvearhead', '5g'),
         ('spark.executor.instances', '60'),
         ('spark.default.parallelism', '600'),
         ('spark.sql.shuffle.partitions', '600')
@@ -326,11 +326,11 @@ class SparkConfOptimizer:
     def as_dict(self) -> Dict[str, Union[int, str]]:
         return {
             'spark.driver.cores': self.optimizer.driver_cores,
-            'spark.driver.memory': self.optimizer.driver_memory,
-            'spark.driver.memoryOvearhead': self.optimizer.driver_memory_overhead,  # noqa: E501
+            'spark.driver.memory': f'{self.optimizer.driver_memory}g',
+            'spark.driver.memoryOvearhead': f'{self.optimizer.driver_memory_overhead}g',  # noqa: E501
             'spark.executor.cores': self.optimizer.executor_cores,
-            'spark.executor.memory': self.optimizer.executor_memory,
-            'spark.executor.memoryOvearhead': self.optimizer.executor_memory_overhead,  # noqa: E501
+            'spark.executor.memory': f'{self.optimizer.executor_memory}g',
+            'spark.executor.memoryOvearhead': f'{self.optimizer.executor_memory_overhead}g',  # noqa: E501
             'spark.executor.instances': self.optimizer.executor_instances,
             'spark.default.parallelism': self.optimizer.default_parallelism,
             'spark.sql.shuffle.partitions': self.optimizer.sql_shuffle_partitions,  # noqa: E501
