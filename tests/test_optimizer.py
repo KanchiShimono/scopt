@@ -101,11 +101,11 @@ class TestSparkConfOptimizer:
         optimizer = SparkConfOptimizer(Instance(32, 248), 10, 'client')
         expected = {
             'spark.driver.cores': 5,
-            'spark.driver.memory': 36,
-            'spark.driver.memoryOvearhead': 5,
+            'spark.driver.memory': '36g',
+            'spark.driver.memoryOvearhead': '5g',
             'spark.executor.cores': 5,
-            'spark.executor.memory': 36,
-            'spark.executor.memoryOvearhead': 5,
+            'spark.executor.memory': '36g',
+            'spark.executor.memoryOvearhead': '5g',
             'spark.executor.instances': 60,
             'spark.default.parallelism': 600,
             'spark.sql.shuffle.partitions': 600,
@@ -116,11 +116,11 @@ class TestSparkConfOptimizer:
         optimizer = SparkConfOptimizer(Instance(32, 248), 10, 'client')
         expected = [
             ('spark.driver.cores', 5),
-            ('spark.driver.memory', 36),
-            ('spark.driver.memoryOvearhead', 5),
+            ('spark.driver.memory', '36g'),
+            ('spark.driver.memoryOvearhead', '5g'),
             ('spark.executor.cores', 5),
-            ('spark.executor.memory', 36),
-            ('spark.executor.memoryOvearhead', 5),
+            ('spark.executor.memory', '36g'),
+            ('spark.executor.memoryOvearhead', '5g'),
             ('spark.executor.instances', 60),
             ('spark.default.parallelism', 600),
             ('spark.sql.shuffle.partitions', 600),
