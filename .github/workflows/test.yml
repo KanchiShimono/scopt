@@ -61,7 +61,7 @@ jobs:
 
       - name: Check by black
         run: |
-          black --check src tests
+          black --check --diff src tests
 
       - name: Check by isort
         run: |
