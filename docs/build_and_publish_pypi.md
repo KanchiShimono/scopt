@@ -6,6 +6,11 @@ Run build script in this repository.
 If you encounted `already exists` errors, You have to remove `build` and `dist` directories before building.
 
 ```sh
+git stash
+# check untracked and commited files are not exist
+git status
+# specify target version
+git checkout vX.X.X
 bash tools/build_package.sh
 ```
 
