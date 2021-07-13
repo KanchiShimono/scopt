@@ -1,3 +1,3 @@
-from scopt.instances.base import Instance
+from scopt.instances.base import Instance, InstanceMapping
 
-__all__ = ['Instance']
+__all__ = ['Instance', 'InstanceMapping']
