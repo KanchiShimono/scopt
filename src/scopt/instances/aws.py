@@ -9,7 +9,7 @@ from scopt.instances import Instance
 # https://docs.aws.amazon.com/ja_jp/emr/latest/ReleaseGuide/emr-hadoop-task-config.html
 
 
-class AwsInstanceMapping:
+class AwsInstanceMap:
     def __getitem__(self, key: str) -> Instance:
         return self._instance_dict[key]
 
