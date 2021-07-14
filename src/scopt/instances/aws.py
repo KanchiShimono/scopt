@@ -10,6 +10,20 @@ from scopt.instances import Instance
 
 
 class AwsInstanceMap:
+    """Map of predefined Instance for AWS EC2
+
+
+    ```python
+    from scopt.instances.aws import AwsInstanceMap
+
+
+    >>> mapping = AwsInstanceMap()
+    >>> print(mapping['r5.4xlarge'])
+
+    Instance(num_cores=16, memory_size=120)
+    ```
+    """
+
     def __getitem__(self, key: str) -> Instance:
         return self._instance_dict[key]
 
