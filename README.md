@@ -85,6 +85,22 @@ print(sco)
 # spark.sql.shuffle.partitions: 600
 ```
 
+### Predefined Instance
+
+You can use predefined `Instance` class.
+Currently supports AWS EC2 instance type.
+
+```python
+from scopt.instances.aws import AwsInstanceMap
+
+mapping = AwsInstanceMap()
+
+mapping['r5.4xlarge']
+# Instance(num_cores=16, memory_size=120)
+mapping['p3.8xlarge']
+# Instance(num_cores=4, memory_size=236)
+```
+
 ### Set properties to SparkConf
 
 You can set properties to SparkConf directory via `as_list` method.
