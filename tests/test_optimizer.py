@@ -97,6 +97,49 @@ class TestSparkConfOptimizer:
         )
         assert isinstance(optimizer.optimizer, ClientModeOptimizer)
 
+    def test_dynamic_allocation(self) -> None:
+        optimizer = SparkConfOptimizer(
+            Instance(32, 248),
+            num_nodes=10,
+            deploy_mode='client',
+            dynamic_allocation=True,
+        )
+        assert optimizer.specified_num_nodes
+
+        optimizer = SparkConfOptimizer(
+            Instance(32, 248), deploy_mode='client', dynamic_allocation=True
+        )
+        assert not optimizer.specified_num_nodes
+        assert optimizer.num_nodes == 2
+
+        optimizer = SparkConfOptimizer(
+            Instance(32, 248),
+            num_nodes=10,
+            deploy_mode='cluster',
+            dynamic_allocation=True,
+        )
+        assert optimizer.specified_num_nodes
+
+        optimizer = SparkConfOptimizer(
+            Instance(32, 248), deploy_mode='cluster', dynamic_allocation=True
+        )
+        assert not optimizer.specified_num_nodes
+        assert optimizer.num_nodes == 2
+
+        with pytest.raises(ValueError):
+            SparkConfOptimizer(
+                Instance(32, 248),
+                deploy_mode='client',
+                dynamic_allocation=False,
+            )
+
+        with pytest.raises(ValueError):
+            SparkConfOptimizer(
+                Instance(32, 248),
+                deploy_mode='cluster',
+                dynamic_allocation=False,
+            )
+
     def test_as_dict(self) -> None:
         optimizer = SparkConfOptimizer(Instance(32, 248), 10, 'client')
         expected = {
@@ -109,6 +152,39 @@ class TestSparkConfOptimizer:
             'spark.executor.instances': 60,
             'spark.default.parallelism': 600,
             'spark.sql.shuffle.partitions': 600,
+        }
+        assert optimizer.as_dict() == expected
+
+    def test_as_dict_dynamic_allocation(self) -> None:
+        optimizer = SparkConfOptimizer(
+            Instance(32, 248),
+            10,
+            deploy_mode='client',
+            dynamic_allocation=True,
+        )
+        expected = {
+            'spark.driver.cores': 5,
+            'spark.driver.memory': '36g',
+            'spark.driver.memoryOvearhead': '5g',
+            'spark.executor.cores': 5,
+            'spark.executor.memory': '36g',
+            'spark.executor.memoryOvearhead': '5g',
+            'spark.default.parallelism': 600,
+            'spark.sql.shuffle.partitions': 600,
+        }
+        assert optimizer.as_dict() == expected
+
+    def test_as_dict_dynamic_allocation_not_specify_num_nodes(self) -> None:
+        optimizer = SparkConfOptimizer(
+            Instance(32, 248), deploy_mode='client', dynamic_allocation=True
+        )
+        expected = {
+            'spark.driver.cores': 5,
+            'spark.driver.memory': '36g',
+            'spark.driver.memoryOvearhead': '5g',
+            'spark.executor.cores': 5,
+            'spark.executor.memory': '36g',
+            'spark.executor.memoryOvearhead': '5g',
         }
         assert optimizer.as_dict() == expected
 
