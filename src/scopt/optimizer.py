@@ -224,13 +224,25 @@ class SparkConfOptimizer:
 
     Args:
         executor_instance (Instance): Instance for executor.
-        num_nodes (int): Number of Spark cluster nodes.
+        num_nodes (int, optional): Number of Spark cluster nodes.
+            None can be accepted only when dynamic_allocation is True.
+            Defaults to None.
         deploy_mode (str, optional): Spark deploy mode. 'client' or 'cluster'.
             Defaults to 'client'.
         driver_instance (Optional[Instance], optional): Instance for driver.
             This can be enabled only 'client' mode. If not be specified,
             executor_instance is used.
             Defaults to None.
+        dynamic_allocation (bool): Dynamic allocation is enabled or not.
+            When dynamic_allocation is True and num_nodes is None, optimizer
+            returns (eg. as_dict, as_list and _repr_html_) only Spark
+            properties about resources. Not contains about parallelism
+            like 'spark.default.parallelism'.
+            If dynamic_allocation is True and specify num_nodes, optimizer
+            returns 'spark.default.parallelism' and
+            'spark.sql.shuffle.partitions' for when executor nodes reach to
+            num_nodes, but does not return 'spark.executor.instances'.
+            Defaults to False.
 
     ```python
     from pyspark import SparkConf
@@ -265,15 +277,70 @@ class SparkConfOptimizer:
         ('spark.sql.shuffle.partitions', '600')
     ])
     ```
+
+    When dynamic allocation is True and not specify num_nodes, optimizer
+    returns only Spark properties about resources.
+
+    ```python
+    >>> sco = SparkConfOptimizer(
+            Instance(32, 250),
+            deploy_mode='client',
+            dynamic_allocation=True,
+        )
+    >>> print(sco)
+
+    spark.driver.cores: 5
+    spark.driver.memory: 36g
+    spark.driver.memoryOvearhead: 5g
+    spark.executor.cores: 5
+    spark.executor.memory: 36g
+    spark.executor.memoryOvearhead: 5g
+    ```
+
+    If dynamic allocation is True and specify num_nodes, optimizer
+    returns 'spark.default.parallelism' and 'spark.sql.shuffle.partitions',
+    but does not return 'spark.executor.instances'.
+
+    ```python
+    >>> sco = SparkConfOptimizer(
+            Instance(32, 250),
+            num_nodes=10,
+            deploy_mode='client',
+            dynamic_allocation=True,
+        )
+    >>> print(sco)
+
+    spark.driver.cores: 5
+    spark.driver.memory: 36g
+    spark.driver.memoryOvearhead: 5g
+    spark.executor.cores: 5
+    spark.executor.memory: 36g
+    spark.executor.memoryOvearhead: 5g
+    spark.default.parallelism: 600
+    spark.sql.shuffle.partitions: 600
+    ```
     """
 
     def __init__(
         self,
         executor_instance: Instance,
-        num_nodes: int,
+        num_nodes: Optional[int] = None,
         deploy_mode: str = 'client',
         driver_instance: Optional[Instance] = None,
+        dynamic_allocation: bool = False,
     ) -> None:
+        if num_nodes is None:
+            if not dynamic_allocation:
+                raise ValueError(
+                    'num_nodes is required when dynamic_allocation is False'
+                )
+            self.specified_num_nodes = False
+            # Optimized SparkConfi values can be calculated only num_nodes = 2
+            # when dynamic allocation is enabled
+            num_nodes = 2
+        else:
+            self.specified_num_nodes = True
+
         mode = DeployMode(deploy_mode.lower())
         self.optimizer = get_optimizer(
             executor_instance, num_nodes, mode, driver_instance
@@ -282,6 +349,7 @@ class SparkConfOptimizer:
         self.num_nodes = num_nodes
         self.deploy_mode = mode
         self.driver_instance = driver_instance
+        self.dynamic_allocation = dynamic_allocation
 
     def __str__(self) -> str:
         return '\n'.join([f'{k}: {v}' for k, v in self.as_dict().items()])
@@ -324,17 +392,27 @@ class SparkConfOptimizer:
         '''
 
     def as_dict(self) -> Dict[str, Union[int, str]]:
-        return {
+        # Explicit type hint to avoid mypy error
+        conf: Dict[str, Union[int, str]] = {
             'spark.driver.cores': self.optimizer.driver_cores,
             'spark.driver.memory': f'{self.optimizer.driver_memory}g',
             'spark.driver.memoryOvearhead': f'{self.optimizer.driver_memory_overhead}g',  # noqa: E501
             'spark.executor.cores': self.optimizer.executor_cores,
             'spark.executor.memory': f'{self.optimizer.executor_memory}g',
             'spark.executor.memoryOvearhead': f'{self.optimizer.executor_memory_overhead}g',  # noqa: E501
-            'spark.executor.instances': self.optimizer.executor_instances,
-            'spark.default.parallelism': self.optimizer.default_parallelism,
-            'spark.sql.shuffle.partitions': self.optimizer.sql_shuffle_partitions,  # noqa: E501
         }
+        if not self.dynamic_allocation:
+            conf[
+                'spark.executor.instances'
+            ] = self.optimizer.executor_instances  # noqa: E501
+        if self.specified_num_nodes:
+            conf[
+                'spark.default.parallelism'
+            ] = self.optimizer.default_parallelism  # noqa: E501
+            conf[
+                'spark.sql.shuffle.partitions'
+            ] = self.optimizer.sql_shuffle_partitions  # noqa: E501
+        return conf
 
     def as_list(self) -> List[Tuple[str, Union[int, str]]]:
         """Return list of tuple of Spark property
