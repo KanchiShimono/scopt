@@ -255,10 +255,10 @@ class SparkConfOptimizer:
 
     spark.driver.cores: 5
     spark.driver.memory: 36g
-    spark.driver.memoryOvearhead: 5g
+    spark.driver.memoryOverhead: 5g
     spark.executor.cores: 5
     spark.executor.memory: 36g
-    spark.executor.memoryOvearhead: 5g
+    spark.executor.memoryOverhead: 5g
     spark.executor.instances: 60
     spark.default.parallelism: 600
     spark.sql.shuffle.partitions: 600
@@ -268,10 +268,10 @@ class SparkConfOptimizer:
     dict_items([
         ('spark.driver.cores', '5'),
         ('spark.driver.memory', '36g'),
-        ('spark.driver.memoryOvearhead', '5g'),
+        ('spark.driver.memoryOverhead', '5g'),
         ('spark.executor.cores', '5'),
         ('spark.executor.memory', '36g'),
-        ('spark.executor.memoryOvearhead', '5g'),
+        ('spark.executor.memoryOverhead', '5g'),
         ('spark.executor.instances', '60'),
         ('spark.default.parallelism', '600'),
         ('spark.sql.shuffle.partitions', '600')
@@ -291,10 +291,10 @@ class SparkConfOptimizer:
 
     spark.driver.cores: 5
     spark.driver.memory: 36g
-    spark.driver.memoryOvearhead: 5g
+    spark.driver.memoryOverhead: 5g
     spark.executor.cores: 5
     spark.executor.memory: 36g
-    spark.executor.memoryOvearhead: 5g
+    spark.executor.memoryOverhead: 5g
     ```
 
     If dynamic allocation is True and specify num_nodes, optimizer
@@ -312,10 +312,10 @@ class SparkConfOptimizer:
 
     spark.driver.cores: 5
     spark.driver.memory: 36g
-    spark.driver.memoryOvearhead: 5g
+    spark.driver.memoryOverhead: 5g
     spark.executor.cores: 5
     spark.executor.memory: 36g
-    spark.executor.memoryOvearhead: 5g
+    spark.executor.memoryOverhead: 5g
     spark.default.parallelism: 600
     spark.sql.shuffle.partitions: 600
     ```
@@ -396,10 +396,10 @@ class SparkConfOptimizer:
         conf: Dict[str, Union[int, str]] = {
             'spark.driver.cores': self.optimizer.driver_cores,
             'spark.driver.memory': f'{self.optimizer.driver_memory}g',
-            'spark.driver.memoryOvearhead': f'{self.optimizer.driver_memory_overhead}g',  # noqa: E501
+            'spark.driver.memoryOverhead': f'{self.optimizer.driver_memory_overhead}g',  # noqa: E501
             'spark.executor.cores': self.optimizer.executor_cores,
             'spark.executor.memory': f'{self.optimizer.executor_memory}g',
-            'spark.executor.memoryOvearhead': f'{self.optimizer.executor_memory_overhead}g',  # noqa: E501
+            'spark.executor.memoryOverhead': f'{self.optimizer.executor_memory_overhead}g',  # noqa: E501
         }
         if not self.dynamic_allocation:
             conf[
