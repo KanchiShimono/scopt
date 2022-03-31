@@ -30,10 +30,10 @@ print(sco)
 
 # spark.driver.cores: 5
 # spark.driver.memory: 36g
-# spark.driver.memoryOvearhead: 5g
+# spark.driver.memoryOverhead: 5g
 # spark.executor.cores: 5
 # spark.executor.memory: 36g
-# spark.executor.memoryOvearhead: 5g
+# spark.executor.memoryOverhead: 5g
 # spark.executor.instances: 60
 # spark.default.parallelism: 600
 # spark.sql.shuffle.partitions: 600
@@ -49,10 +49,10 @@ print(sco)
 
 # spark.driver.cores: 5
 # spark.driver.memory: 36g
-# spark.driver.memoryOvearhead: 5g
+# spark.driver.memoryOverhead: 5g
 # spark.executor.cores: 5
 # spark.executor.memory: 36g
-# spark.executor.memoryOvearhead: 5g
+# spark.executor.memoryOverhead: 5g
 # spark.executor.instances: 59
 # spark.default.parallelism: 590
 # spark.sql.shuffle.partitions: 590
@@ -76,10 +76,10 @@ print(sco)
 
 # spark.driver.cores: 3
 # spark.driver.memory: 26g
-# spark.driver.memoryOvearhead: 3g
+# spark.driver.memoryOverhead: 3g
 # spark.executor.cores: 5
 # spark.executor.memory: 36g
-# spark.executor.memoryOvearhead: 5g
+# spark.executor.memoryOverhead: 5g
 # spark.executor.instances: 60
 # spark.default.parallelism: 600
 # spark.sql.shuffle.partitions: 600
@@ -103,10 +103,10 @@ print(sco)
 
 # spark.driver.cores: 3
 # spark.driver.memory: 26g
-# spark.driver.memoryOvearhead: 3g
+# spark.driver.memoryOverhead: 3g
 # spark.executor.cores: 5
 # spark.executor.memory: 36g
-# spark.executor.memoryOvearhead: 5g
+# spark.executor.memoryOverhead: 5g
 ```
 
 #### Specify num_nodes
@@ -124,10 +124,10 @@ print(sco)
 
 # spark.driver.cores: 3
 # spark.driver.memory: 26g
-# spark.driver.memoryOvearhead: 3g
+# spark.driver.memoryOverhead: 3g
 # spark.executor.cores: 5
 # spark.executor.memory: 36g
-# spark.executor.memoryOvearhead: 5g
+# spark.executor.memoryOverhead: 5g
 # spark.default.parallelism: 600
 # spark.sql.shuffle.partitions: 600
 ```
@@ -172,10 +172,10 @@ conf.setAll(sco.as_list())
 # dict_items([
 #     ('spark.driver.cores', '5'),
 #     ('spark.driver.memory', '36g'),
-#     ('spark.driver.memoryOvearhead', '5g'),
+#     ('spark.driver.memoryOverhead', '5g'),
 #     ('spark.executor.cores', '5'),
 #     ('spark.executor.memory', '36g'),
-#     ('spark.executor.memoryOvearhead', '5g'),
+#     ('spark.executor.memoryOverhead', '5g'),
 #     ('spark.executor.instances', '60'),
 #     ('spark.default.parallelism', '600'),
 #     ('spark.sql.shuffle.partitions', '600')
