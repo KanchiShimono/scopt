@@ -20,6 +20,10 @@ jobs:
           python-version: 3.9
           architecture: x64
 
+      - name: Setup | Install build dependencies
+        run: |
+          pip install wheel
+
       - name: Build | sdist and bdist
         run: |
           ./tools/build_package.sh
