@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - "*"
     tags:
       - "v*.*.*"
 
@@ -22,7 +20,7 @@ jobs:
 
       - name: Setup | Install build dependencies
         run: |
-          pip install wheel
+          pip install wheel twine
 
       - name: Build | sdist and wheel
         run: |
@@ -39,3 +37,18 @@ jobs:
         with:
           name: wheel
           path: dist/scopt-*.whl
+
+      - name: Release | Test PyPI
+        run: |
+          twine upload \
+            --username ${{ secrets.PYPI_USERNAME }} \
+            --password ${{ secrets.PYPI_PASSWORD }} \
+            --repository-url https://test.pypi.org/legacy/ \
+            dist/*
+
+      - name: Release | PyPI
+        run: |
+          twine upload \
+            --username ${{ secrets.PYPI_USERNAME }} \
+            --password ${{ secrets.PYPI_PASSWORD }} \
+            dist/*
