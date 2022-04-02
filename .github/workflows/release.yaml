@@ -24,12 +24,18 @@ jobs:
         run: |
           pip install wheel
 
-      - name: Build | sdist and bdist
+      - name: Build | sdist and wheel
         run: |
           ./tools/build_package.sh
 
-      - name: Release | Upload to GitHub artifacts
+      - name: Release | Upload sdist to GitHub artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: dist
-          path: dist/*
+          name: sdist
+          path: dist/scopt-*.tar.gz
+
+      - name: Release | Upload wheel to GitHub artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheel
+          path: dist/scopt-*.whl
