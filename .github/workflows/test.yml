@@ -2,8 +2,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - "v*.*.*"
   pull_request:
     branches:
       - master
@@ -17,22 +15,23 @@ jobs:
         python-version:
           - 3.8
           - 3.9
+          - 3.10
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2
+      - name: Setup | Checkout the repository
+        uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Setup | Python
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
 
-      - name: Install Python dependencies
+      - name: Setup | Python dependencies
         run: |
           pip install '.[test]'
 
-      - name: Unit tests
+      - name: Test | pytest
         run: |
           pytest -v tests
 
@@ -44,29 +43,30 @@ jobs:
         python-version:
           - 3.8
           - 3.9
+          - 3.10
 
     steps:
-      - name: Checkout the repository
+      - name: Setup | Checkout the repository
         uses: actions/checkout@v2
 
-      - name: Setup Python
+      - name: Setup | Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
 
-      - name: Install Python dependencies
+      - name: Setup | Python dependencies
         run: |
           pip install '.[test]'
 
-      - name: Check by black
+      - name: Test | black
         run: |
           black --check --diff src tests
 
-      - name: Check by isort
+      - name: Test | isort
         run: |
           isort **/*.py --check-only
 
-      - name: Check by flake8
+      - name: Test | flake8
         run: |
           flake8 src tests
