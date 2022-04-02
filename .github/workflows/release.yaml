@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup | Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Setup | Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+          architecture: x64
+
+      - name: Build | sdist and bdist
+        run: |
+          ./tools/build_package.sh
+
+      - name: Release | Upload to GitHub artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/*
