@@ -16,6 +16,9 @@ bash tools/build_package.sh
 
 ## Publish
 
+Publish steps is currently automated by GitHub Actions when semantic versioning tag (v\*.\*.\*) is pushed.
+If you needed to publish to PyPI manually by any reason, follow the steps below.
+
 After build package, publish to PyPI repository.
 You should publish to Test PyPI repository first.
 

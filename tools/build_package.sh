@@ -6,7 +6,6 @@ BUILD_DIR="${REPO_ROOT}/build"
 DIST_DIR="${REPO_ROOT}/dist"
 
 # enable recursive match by **
-shopt -s globstar
 cd "${REPO_ROOT}"
 
 # check directories are already exist
